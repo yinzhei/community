@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/static/css/test.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher</title>
+</head>
+<body>
+<p class="green">hxb</p>
+
+    <ul>
+        <li th:each = "model:${discussPosts}">
+            <a th:text = "${model.id}">aaa</a>
+        </li>
+    </ul>
+<!--    <a th:href="'hxb'+${page.current}">1</a>-->
+    <a th:class="${page.current==1}?'red':''"  href="http://127.0.0.1:8080/community/discuss/index?current=1" >first</a>
+    <a th:href="'http://127.0.0.1:8080/community/discuss/index?current='+ ${page.current-1}">pre</a>
+    <a th:text="${page.current}">0</a>
+    <a th:href="'http://127.0.0.1:8080/community/discuss/index?current='+ ${page.current+1}">next</a>
+    <a href="http://127.0.0.1:8080/community/discuss/index?current=10">end</a>
+    <p th:text="'当前位于'+${page.current}+'页'"></p>
+</body>
+</html>
