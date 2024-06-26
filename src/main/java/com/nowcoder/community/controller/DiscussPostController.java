@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/discuss")
+//@RequestMapping("/discuss")
 public class DiscussPostController {
     @Autowired
     private DiscussPostService discussPostService;

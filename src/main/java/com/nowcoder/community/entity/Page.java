@@ -9,7 +9,7 @@ public class Page {
     private int current = 1;
     private int[] range;
     private int total;
-    private String path="http://127.0.0.1:8080/community/discuss/index";
+    private String path="http://127.0.0.1:8080/community/index";
 
 
     @Override
