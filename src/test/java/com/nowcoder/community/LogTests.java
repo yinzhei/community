@@ -18,10 +18,9 @@ public class LogTests {
 
         @Test
         public void test(){
-                logger.debug("debug log");
-                logger.info("info log");
-                logger.warn("warn log");
-                logger.error("error log");
+                String a="123";
+                String b = new String("123");
+                System.out.println(a==b);
         }
         @Test
         public void search() {

@@ -1,10 +1,13 @@
 package com.nowcoder.community.service;
 
+import com.nowcoder.community.dao.LoginTicketMapper;
 import com.nowcoder.community.dao.UserMapper;
+import com.nowcoder.community.entity.LoginTicket;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.MailClient;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +35,14 @@ public class UserService implements CommunityConstant {
     @Value("${server.servlet.context-path}")
     private String path;
 
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
+
     public User findUserById(int id){
         return userMapper.selectById(id);
+    }
+    public void updateHeadUrlById(int id,String url){
+        userMapper.updateHeader(id, url);
     }
 
     public Map<String,Object> registerUser(User user){
@@ -88,14 +97,56 @@ public class UserService implements CommunityConstant {
         if (user.getStatus()==1){
             return ACTIVATION_REPEAT;
         }else{
-            if (user.getActivationCode()==act_code){
+            if (user.getActivationCode().equals(act_code)){
                 userMapper.updateStatus(userId,1);
                 return ACTIVATION_SUCCESS;
             }else{
                 return ACTIVATION_FAIL;
             }
         }
+    }
 
+
+
+    public  Map<String,String> loginService(User user,int expredSecends){
+        Map<String,String> map = new HashMap<>();
+        if (StringUtils.isBlank(user.getUsername())){
+            map.put("usernameMsg","用户名不能为空");
+            return map;
+        }
+        if (StringUtils.isBlank(user.getPassword())){
+            map.put("passwordMsg","密码不能为空");
+            return map;
+        }
+        if (userMapper.selectByName(user.getUsername())==null){
+            map.put("usernameMsg","该账号不存在");
+            return map;
+        }
+        User result = userMapper.selectByName(user.getUsername());
+        if (result.getStatus()==0){
+            map.put("usernameMsg","该账号未激活");
+            return map;
+        }
+        if (!result.getPassword().equals(CommunityUtil.md5(user.getPassword()+result.getSalt()))){
+            map.put("passwordMsg","密码错误");
+            return map;
+        }
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setUserId(result.getId());
+        loginTicket.setStatus(1);
+        loginTicket.setTicket(CommunityUtil.generateUUID());
+        loginTicket.setExpired(new Date(System.currentTimeMillis()+expredSecends*1000));
+        loginTicketMapper.insertTicket(loginTicket);
+        map.put("loginTicket",loginTicket.getTicket());
+        return map;
+    }
+
+    public void loginOut(String ticket){
+        loginTicketMapper.updateStatus(0,ticket);
+    }
+
+    public LoginTicket findLoginTicket(String ticket){
+        return loginTicketMapper.selectByTicket(ticket);
     }
 
 }
