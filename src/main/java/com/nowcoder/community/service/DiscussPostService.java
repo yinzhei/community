@@ -5,6 +5,7 @@ import com.nowcoder.community.entity.DiscussPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,5 +18,9 @@ public class DiscussPostService {
     }
     public int selectRows(){
         return discussPostDao.selectRows();
+    }
+    public void addPost(DiscussPost discussPost){
+
+        discussPostDao.insertPost(discussPost);
     }
 }

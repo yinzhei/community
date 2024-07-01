@@ -9,4 +9,5 @@ import java.util.List;
 public interface DiscussPostDao {
     List<DiscussPost> selectDiscuss(int offset,int userId);
     int selectRows();
+    void insertPost(DiscussPost discussPost);
 }

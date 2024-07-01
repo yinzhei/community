@@ -3,18 +3,26 @@ package com.nowcoder.community.entity;
 import java.util.Date;
 
 public class DiscussPost {
-    public int id;
-    public int userId;
-    public String title;
-    public String content;
-    public int type;
-    public int status;
-    public Date createTime;
-    public int commentCount;
-    public int score;
+    private int id;
+    private int userId;
+    private String title;
+    private String content;
+    private int type;
+    private int status;
+    private Date createTime;
+    private int commentCount;
+    private int score;
 
     public int getId() {
         return id;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public int getUserId() {

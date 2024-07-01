@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -71,6 +72,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "headImg/{filename}",method = RequestMethod.GET)
+    @ResponseBody
     public String getHeadImg(@PathVariable("filename") String filename, HttpServletResponse response){
         filename = uploadPath + "/"+filename;
         String suffix = filename.substring(filename.lastIndexOf("."));

@@ -1,7 +1,9 @@
 package com.nowcoder.community;
 
+import com.nowcoder.community.dao.DiscussPostDao;
 import com.nowcoder.community.dao.LoginTicketMapper;
 import com.nowcoder.community.dao.UserMapper;
+import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.LoginTicket;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.util.CommunityUtil;
@@ -24,6 +26,9 @@ public class MapperTests {
 
     @Autowired
     private LoginTicketMapper loginTicketMapper;
+
+    @Autowired
+    private DiscussPostDao discussPostDao;
 
     @Test
     public void testSelectUser() {
@@ -49,6 +54,20 @@ public class MapperTests {
         LoginTicket loginTicket1 = loginTicketMapper.selectByTicket(loginTicket.getTicket());
         System.out.println(loginTicket1);
 //        System.out.println(loginTicket1);
+    }
+
+    @Test
+    public void testInsertPost() {
+        DiscussPost discussPost = new DiscussPost();
+        discussPost.setUserId(123);
+        discussPost.setContent("test");
+        discussPost.setScore(123);
+        discussPost.setTitle("test");
+        discussPost.setType(0);
+        discussPost.setCommentCount(0);
+        discussPost.setStatus(0);
+        discussPost.setCreate_time(new Date());
+        discussPostDao.insertPost(discussPost);
     }
 
 
