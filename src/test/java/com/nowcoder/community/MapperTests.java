@@ -1,5 +1,6 @@
 package com.nowcoder.community;
 
+import com.nowcoder.community.dao.CommentMapper;
 import com.nowcoder.community.dao.DiscussPostDao;
 import com.nowcoder.community.dao.LoginTicketMapper;
 import com.nowcoder.community.dao.UserMapper;
@@ -29,6 +30,15 @@ public class MapperTests {
 
     @Autowired
     private DiscussPostDao discussPostDao;
+
+    @Autowired
+    private CommentMapper commentMapper;
+
+    @Test
+    public void testSelectComent() {
+        int count = commentMapper.selectReplyCount(2,104);
+        System.out.println(count);
+    }
 
     @Test
     public void testSelectUser() {

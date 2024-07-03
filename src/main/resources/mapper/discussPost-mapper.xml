@@ -7,15 +7,22 @@
         select * from discuss_post
         <if test="userId!=0">where user_id = #{userId}</if>
         order by type desc,create_time desc
-        limit #{offset},10
+        limit #{offset},#{limit}
     </select>
 
     <select id="selectRows" resultType="int">
         select count(*) from discuss_post;
     </select>
 
+    <select id="selectByPostId" resultType="DiscussPost">
+        select * from discuss_post where id = #{postId}
+    </select>
+
     <insert id="insertPost" parameterType="DiscussPost">
         INSERT INTO `conmunity`.`discuss_post` (`user_id`, `title`, `content`, `type`, `status`, `create_time`, `comment_count`, `score`)
         VALUES (#{userId}, #{title}, #{content}, #{type}, #{status}, #{createTime}, #{commentCount}, #{score});
     </insert>
+    <update id="updateCommentCount">
+        UPDATE discuss_post SET `comment_count` = #{commentCount} WHERE (`id` = #{id});
+    </update>
 </mapper>

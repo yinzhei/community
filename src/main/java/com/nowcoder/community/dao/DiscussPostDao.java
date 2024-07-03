@@ -7,7 +7,9 @@ import java.util.List;
 
 @Mapper
 public interface DiscussPostDao {
-    List<DiscussPost> selectDiscuss(int offset,int userId);
+    List<DiscussPost> selectDiscuss(int offset,int limit,int userId);
     int selectRows();
     void insertPost(DiscussPost discussPost);
+    DiscussPost selectByPostId(int postId);
+    void updateCommentCount(int id,int commentCount);
 }

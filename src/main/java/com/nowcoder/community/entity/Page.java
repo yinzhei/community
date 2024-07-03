@@ -9,7 +9,7 @@ public class Page {
     private int current = 1;
     private int[] range;
     private int total;
-    private String path="http://127.0.0.1:8080/community/index";
+    private String path;
 
 
     @Override
@@ -68,7 +68,7 @@ public class Page {
 
     public void setRows(int rows) {
         this.rows = rows;
-        this.setTotal(this.rows/10+1);
+        this.setTotal(this.rows/this.getLimit()+1);
     }
 
 
@@ -81,7 +81,7 @@ public class Page {
     }
 
     public int getOffset() {
-        return offset;
+        return (this.getCurrent()-1)*this.getLimit();
     }
 
     public int getRows() {
